@@ -6,3 +6,7 @@
   --bigorange: #ff8200;
   --smokeygray: #4b4b4b;
 }
+
+body {
+  background: var(--smokeygray);
+}

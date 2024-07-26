@@ -1,5 +1,5 @@
 'use client'
-import ClipLoader from 'react-spinners/ClipLoader'
+import FadeLoader from 'react-spinners/FadeLoader'
 
 const override = {
   display: 'block',
@@ -7,5 +7,5 @@ const override = {
 }
 
 export default function LoadingPage({loading}) {
-  return <ClipLoader color='#3b82f6' loading={loading} cssOverride={override} size={150} aria-label='Loading Spinner' />
+  return <FadeLoader color='#4b4b4b' loading={loading} cssOverride={override} size={150} aria-label='Loading Spinner' />
 }

@@ -1,8 +1,8 @@
-import {auth, signIn, signOut} from '@/auth'
+import {auth} from '@/auth'
 
 export default async function Page() {
-  let session = await auth()
-  let user = session?.user?.email
+  const session = await auth()
+  const user = session?.user?.email
   console.log(session)
 
   return (

@@ -6,7 +6,6 @@ import Link from 'next/link'
 import logo from '@/public/images/z-logo.png'
 import profileDefault from '@/public/images/profile.png'
 import {FaGoogle, FaApple, FaFacebook, FaXTwitter} from 'react-icons/fa6'
-import {FcGoogle} from 'react-icons/fc'
 
 import {signIn, signOut, useSession, getProviders} from 'next-auth/react'
 import {FaTwitterSquare} from 'react-icons/fa'
@@ -26,43 +25,47 @@ export default function Navbar() {
     }
     setAuthProviders()
   }, [])
-  providers && console.log(Object.keys(providers))
-  providers && console.log(providers.apple.id)
+
   return (
-    <nav className='px-6 bg-smokeygray text-white h-12 flex relative items-center justify-between'>
+    <nav className='px-10 bg-smokeygray text-white h-12 flex relative items-center justify-between border-b border-b-white/20'>
       <div className='flex items-center justify-center'>
-        <Link href='/' className='mr-8'>
-          <Image className='w-auto h-10' src={logo} alt='PropertyPulse' />
+        <Link href='/' className='mr-12'>
+          <Image className='w-auto h-10' src={logo} alt='' />
         </Link>
 
-        {session && (
-          <div className='flex items-center gap-4'>
-            <Link href='/standings' className={`${pathname === '/standings' ? 'border-b-2 border-b-bigorange bg-bigorange/10': ''} leading-[44px]`}>
-              <span className='py-[4px] hover:bg-black/15 hover:transition-all hover:ease-linear rounded-md px-3'>Standings</span>
-            </Link>
+        <div className='flex items-center'>
+          <Link href='/' className={`${pathname === '/' ? 'border-b-2 border-b-bigorange bg-bigorange/10' : ''} leading-[44px] hover:bg-black/15 px-6 hover:transition-all hover:ease-linear`}>
+            Games
+          </Link>
+          {session && (
+            <>
+              <Link href='/standings' className={`${pathname === '/standings' ? 'border-b-2 border-b-bigorange bg-bigorange/10' : ''} leading-[44px] hover:bg-black/15 px-6 hover:transition-all hover:ease-linear`}>
+                Standings
+              </Link>
 
-            <Link href='/book' className={`${pathname === '/book' ? 'bg-bigorange/10 border-b-4 border-b-bigorange' : ''} leading-[44px]`}>
-              <span className='py-[4px] hover:bg-black/15 hover:ease-linear rounded-md px-3'>Book</span>
-            </Link>
-          </div>
-        )}
+              <Link href='/book' className={`${pathname === '/book' ? 'border-b-2 border-b-bigorange bg-bigorange/10' : ''} leading-[44px] hover:bg-black/15 px-6 hover:transition-all hover:ease-linear`}>
+                Book
+              </Link>
+            </>
+          )}
+        </div>
       </div>
 
       {/* <!-- Right Side Menu (Logged Out) --> */}
       {!session && (
         <div className='hidden md:block md:ml-6'>
-          <div className='flex items-center'>
-            <span className='mr-2'>Login or Register:</span>
-            <button onClick={() => signIn('google')} title='Google' className='rounded-md hover:bg-black px-3 py-2'>
+          <div className='flex items-center gap-2'>
+            <span className='mr-2'>Login with:</span>
+            <button onClick={() => signIn('google')} title='Google' className='rounded-md bg-black border border-black px-3 py-2 hover:border-white'>
               <FaGoogle />
             </button>
-            <button onClick={() => signIn('twitter')} title='Twitter' className='rounded-md hover:bg-black px-3 py-2'>
+            <button onClick={() => signIn('twitter')} title='Twitter' className='rounded-md bg-black border border-black px-3 py-2 hover:border-white'>
               <FaXTwitter />
             </button>
-            <button onClick={() => signIn('apple')} title='Apple' className='rounded-md hover:bg-black px-3 py-2'>
+            <button onClick={() => signIn('apple')} title='Apple' className='rounded-md bg-black border border-black px-3 py-2 hover:border-white'>
               <FaApple />
             </button>
-            <button onClick={() => signIn('facebook')} title='Facebook' className='rounded-md hover:bg-black px-3 py-2'>
+            <button onClick={() => signIn('facebook')} title='Facebook' className='rounded-md bg-black border border-black px-3 py-2 hover:border-white'>
               <FaFacebook />
             </button>
           </div>
