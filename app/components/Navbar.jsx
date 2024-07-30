@@ -6,14 +6,11 @@ import Link from 'next/link'
 import logo from '@/public/images/z-logo.png'
 import profileDefault from '@/public/images/profile.png'
 import {FaGoogle, FaApple, FaFacebook, FaXTwitter} from 'react-icons/fa6'
-
 import {signIn, signOut, useSession, getProviders} from 'next-auth/react'
-import {FaTwitterSquare} from 'react-icons/fa'
 
 export default function Navbar() {
   const {data: session} = useSession()
   const profileImage = session?.user?.image
-  console.log()
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
   const [providers, setProviders] = useState(null)
   const pathname = usePathname()
@@ -27,7 +24,7 @@ export default function Navbar() {
   }, [])
 
   return (
-    <nav className='px-10 bg-smokeygray text-white h-12 flex relative items-center justify-between border-b border-b-white/20'>
+    <nav className='px-10 bg-xgraysmokey text-white h-12 flex relative items-center justify-between border-b border-b-white/20'>
       <div className='flex items-center justify-center'>
         <Link href='/' className='mr-12'>
           <Image className='w-auto h-10' src={logo} alt='' />
@@ -35,7 +32,7 @@ export default function Navbar() {
 
         <div className='flex items-center'>
           <Link href='/' className={`${pathname === '/' ? 'border-b-2 border-b-bigorange bg-bigorange/10' : ''} leading-[44px] hover:bg-black/15 px-6 hover:transition-all hover:ease-linear`}>
-            Games
+            Week __ Games
           </Link>
           {session && (
             <>
@@ -48,6 +45,9 @@ export default function Navbar() {
               </Link>
             </>
           )}
+          <Link href='/rules' className={`${pathname === '/rules' ? 'border-b-2 border-b-bigorange bg-bigorange/10' : ''} leading-[44px] hover:bg-black/15 px-6 hover:transition-all hover:ease-linear`}>
+            Rules
+          </Link>
         </div>
       </div>
 
@@ -55,7 +55,7 @@ export default function Navbar() {
       {!session && (
         <div className='hidden md:block md:ml-6'>
           <div className='flex items-center gap-2'>
-            <span className='mr-2'>Login with:</span>
+            <span className='mr-2'>Sign Up / Sign In with:</span>
             <button onClick={() => signIn('google')} title='Google' className='rounded-md bg-black border border-black px-3 py-2 hover:border-white'>
               <FaGoogle />
             </button>

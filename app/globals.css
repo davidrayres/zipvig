@@ -4,9 +4,134 @@
 
 :root {
   --bigorange: #ff8200;
-  --smokeygray: #4b4b4b;
+  --xgraydark: #262626;
+  --xgraysmokey: #4b4b4b;
+  --xgraymid: #a5a5a5;
+  --xgraylight: #d2d2d2;
+  --xgraywhite: #e9e9e9;
 }
 
-body {
-  background: var(--smokeygray);
+/* Game Pods */
+
+/* table {
+  @apply w-full;
+} */
+/* tr {
+  @apply flex;
+} */
+/* td {
+  @apply flex items-center border;
+} */
+
+/* .gamepod {
+  @apply relative bg-white p-4;
+} */
+
+/* .info {
+  @apply flex justify-between text-sm font-bold mb-1;
+} */
+
+.team {
+  @apply w-full flex gap-2 items-center justify-start whitespace-nowrap;
+}
+
+.score {
+  @apply min-w-12 max-w-12 flex items-center justify-start whitespace-nowrap;
+}
+
+.odds {
+  @apply min-w-12 max-w-12 mx-1 text-center text-sm border border-xgraylight bg-xgraylight rounded py-1 m-1 cursor-pointer;
+}
+
+/* .odds {
+  min-width: 3.25rem;
+  max-width: 3.25rem;
+  margin: 0 0.15rem;
+  text-align: center;
+  font-size: 0.9rem;
+  border: 1px solid gainsboro;
+  border-radius: 4px;
+  padding: 6px 0;
+  margin: 0.15rem;
+  cursor: pointer;
+  background: gainsboro;
+} */
+
+/* th {
+  font-weight: initial;
+} */
+
+/* .gamepod {
+  position: relative;
+  border-bottom: 1px solid lightgray;
+  background: white;
+  padding: 1rem;
+} */
+
+/* .info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+} */
+
+/* .team {
+  width: 100%;
+} */
+
+/* .score {
+  min-width: 3rem;
+  max-width: 3rem;
+} */
+
+/* .odds {
+  min-width: 3.25rem;
+  max-width: 3.25rem;
+  margin: 0 0.15rem;
+  text-align: center;
+  font-size: 0.9rem;
+  border: 1px solid gainsboro;
+  border-radius: 4px;
+  padding: 6px 0;
+  margin: 0.15rem;
+  cursor: pointer;
+  background: gainsboro;
+} */
+
+.odds-off {
+  @apply bg-white cursor-not-allowed;
+}
+
+/* td.team,
+td.score {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  white-space: nowrap;
+} */
+
+.logo {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.rank-record,
+.name {
+  padding-left: 0.5rem;
+}
+
+.rank-record {
+  font-size: 0.85rem;
+  color: gray;
+}
+
+/* .score {
+  min-width: 3rem;
+  max-width: 3rem;
+} */
+
+td.bet {
+  background: black;
+  color: white;
 }

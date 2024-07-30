@@ -7,5 +7,5 @@ const override = {
 }
 
 export default function LoadingPage({loading}) {
-  return <FadeLoader color='#4b4b4b' loading={loading} cssOverride={override} size={150} aria-label='Loading Spinner' />
+  return <FadeLoader color='#ff8200' loading={loading} cssOverride={override} size={150} aria-label='Loading Spinner' />
 }
