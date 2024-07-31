@@ -1,11 +1,4 @@
-'use client'
-
-export default function RulesPage() {
-  getData('20240903-20240909')
-  return <>RulesPage</>
-}
-
-async function getData(dates) {
+export async function getGames(dates) {
   const ncaaUrl = fetch(`https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&dates=${dates}`)
   const nflUrl = fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=1000&dates=${dates}`)
   const results = await Promise.all([ncaaUrl, nflUrl])

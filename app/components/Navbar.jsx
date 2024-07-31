@@ -28,7 +28,7 @@ export default function Navbar() {
     <nav className='px-10 bg-xgraysmokey text-white h-12 flex relative items-center justify-between border-b border-b-white/20'>
       <div className='flex items-center justify-center'>
         <Link href='/' className='mr-12'>
-          <Image className='w-auto h-10' src={logo} alt='' />
+          <Image className='w-auto h-10' src={logo} alt='' priority='true' />
         </Link>
 
         <div className='flex items-center'>
@@ -80,7 +80,7 @@ export default function Navbar() {
           <div className='ml-4'>
             <button type='button' className='flex items-center ml-auto' onClick={() => setIsProfileMenuOpen(prev => !prev)}>
               <span className='mr-2'>{session?.user.name}</span>
-              <Image className='rounded-full' src={session?.user?.image || profileDefault} width={40} height={40} alt='' />
+              <Image className='rounded-full' src={session?.user?.image || profileDefault} width={40} height={40} alt='' priority='true' />
             </button>
 
             {/* <!-- Profile dropdown --> */}

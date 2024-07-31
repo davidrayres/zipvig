@@ -1,10 +1,9 @@
 'use client'
-import {createContext, useContext, useState} from 'react'
+import {usePickContext} from '@/context/GlobalContext'
 import Image from 'next/image'
 
 export default function GamePod({game}) {
-  // const [pickSlip, setPickSlip] = useState([])
-  const pickSlip = []
+  const {pickSlip, setPickSlip} = usePickContext()
 
   const gameId = game.id
   const date = game.date
@@ -38,6 +37,50 @@ export default function GamePod({game}) {
   const visitorSpread = spread ? (favorite === visitorName ? `-${spread}` : `+${spread}`) : 'off'
   const homePick = favorite === homeName ? 'fav' : 'dog'
   const homeSpread = spread ? (favorite === homeName ? `-${spread}` : `+${spread}`) : 'off'
+
+  function handlePick(e) {
+    if (e.target.innerText === 'off') return
+
+    //remove pick if clicked on an existing pick
+    if (e.target.classList.contains('pick')) {
+      // const idIndex = pickSlip.findIndex(pick => pick.pickId === e.target.id)
+      // pickSlip.splice(idIndex, 1)
+      setPickSlip(pickSlip.filter(pick => pick.pickId !== e.target.id))
+      // setPickSlip(pickSlip.splice(idIndex, 1))
+      e.target.classList.remove('pick')
+      console.log(pickSlip)
+      return
+    }
+
+    e.target.classList.add('pick')
+    const pickType = e.target.dataset.picktype
+    const line = pickType === 'spread' ? e.target.innerText.slice(1) : e.target.innerText
+    const newPick = {
+      pickId: e.target.id,
+      gameId: gameId,
+      gameState: timeTv,
+      startDate: new Date(date),
+      startTime: new Date(date).getTime().toString(),
+      matchup: matchup,
+      favorite: favorite || 'na',
+      pick: e.target.dataset.pick,
+      betType: e.target.dataset.bettype, //spread, total
+      pickType: pickType, //fav, dog, over, under
+      line: line,
+      score: 'tbd',
+      result: 'tbd',
+      loc: e.target.dataset.loc || 'na',
+      league: 'tbd',
+      conf: 'tbd',
+      logo: e.target.dataset.pick === homeName ? homeLogo : visitorLogo,
+    }
+
+    console.log(newPick)
+    // pickSlip.push(newPick)
+    setPickSlip([...pickSlip, newPick])
+    // setPickSlip(pickSlip.push(newPick))
+    console.log(pickSlip)
+  }
 
   return (
     <div className='flex flex-col gap-2 bg-white p-4 w-full rounded'>
@@ -82,51 +125,4 @@ export default function GamePod({game}) {
       </div>
     </div>
   )
-
-  function handlePick(e) {
-    if (e.target.innerText === 'off') return
-
-    //remove pick if clicked on an existing pick
-    if (e.target.classList.contains('pick')) {
-      const idIndex = pickSlip.findIndex(pick => pick.pickId === e.target.id)
-      pickSlip.splice(idIndex, 1)
-      // setPickSlip(pickSlip.filter(pick => pick.pickId !== e.target.id))
-      // setPickSlip(pickSlip.splice(idIndex, 1))
-      e.target.classList.remove('pick')
-      console.log(pickSlip)
-      return
-    }
-
-    e.target.classList.add('pick')
-
-    const pickType = e.target.dataset.pickType
-    const line = pickType === 'spread' ? e.target.innerText.slice(1) : e.target.innerText
-
-    const newPick = {
-      pickId: e.target.id,
-      gameId: gameId,
-      gameState: timeTv,
-      startDate: new Date(date),
-      startTime: new Date(date).getTime().toString(),
-      matchup: matchup,
-      favorite: favorite || 'na',
-      pick: e.target.dataset.pick,
-      betType: e.target.dataset.bettype, //spread, total
-      pickType: pickType, //fav, dog, over, under
-      line: line,
-      score: 'tbd',
-      result: 'tbd',
-      loc: e.target.dataset.loc || 'na',
-      league: 'tbd',
-      conf: 'tbd',
-      logo: e.target.dataset.pick === homeName ? homeLogo : visitorLogo,
-    }
-    console.log(newPick)
-
-    pickSlip.push(newPick)
-    // setPickSlip(...pickSlip, newPick)
-    // setPickSlip(pickSlip.push(newPick))
-
-    console.log(pickSlip)
-  }
 }

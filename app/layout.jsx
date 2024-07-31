@@ -2,6 +2,7 @@ import {Inter} from 'next/font/google'
 import './globals.css'
 import Navbar from './components/Navbar'
 import {SessionProvider} from 'next-auth/react'
+import {PickProvider} from '@/context/GlobalContext'
 
 const inter = Inter({subsets: ['latin']})
 
@@ -13,12 +14,14 @@ export const metadata = {
 export default function RootLayout({children}) {
   return (
     <SessionProvider>
-      <html lang='en'>
-        <body className={`bg-xgraylight select-none ${inter.className}`}>
-          <Navbar />
-          <main>{children}</main>
-        </body>
-      </html>
+      <PickProvider>
+        <html lang='en'>
+          <body className={`bg-xgraylight select-none ${inter.className}`}>
+            <Navbar />
+            <main>{children}</main>
+          </body>
+        </html>
+      </PickProvider>
     </SessionProvider>
   )
 }

@@ -100,7 +100,7 @@
 } */
 
 .odds-off {
-  @apply bg-white cursor-not-allowed;
+  @apply bg-white cursor-not-allowed pointer-events-none border-xgraywhite;
 }
 
 .pick {
