@@ -7,6 +7,7 @@ import logo from '@/public/images/z-logo.png'
 import profileDefault from '@/public/images/profile.png'
 import {FaGoogle, FaApple, FaFacebook, FaXTwitter} from 'react-icons/fa6'
 import {signIn, signOut, useSession, getProviders} from 'next-auth/react'
+import {MdEmail} from 'react-icons/md'
 
 export default function Navbar() {
   const {data: session} = useSession()
@@ -59,14 +60,14 @@ export default function Navbar() {
             <button onClick={() => signIn('google')} title='Google' className='rounded-md bg-black border border-black px-3 py-2 hover:border-white'>
               <FaGoogle />
             </button>
-            <button onClick={() => signIn('twitter')} title='Twitter' className='rounded-md bg-black border border-black px-3 py-2 hover:border-white'>
-              <FaXTwitter />
-            </button>
             <button onClick={() => signIn('apple')} title='Apple' className='rounded-md bg-black border border-black px-3 py-2 hover:border-white'>
               <FaApple />
             </button>
             <button onClick={() => signIn('facebook')} title='Facebook' className='rounded-md bg-black border border-black px-3 py-2 hover:border-white'>
               <FaFacebook />
+            </button>
+            <button onClick={() => signIn('facebook')} title='Email & Password' className='rounded-md bg-black border border-black px-3 py-2 hover:border-white'>
+              <MdEmail />
             </button>
           </div>
         </div>

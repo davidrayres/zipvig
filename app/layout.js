@@ -7,14 +7,14 @@ const inter = Inter({subsets: ['latin']})
 
 export const metadata = {
   title: 'zipvig',
-  description: 'BRING DOWN THE HOUSE',
+  description: 'ZERO VIGORISH',
 }
 
 export default function RootLayout({children}) {
   return (
     <SessionProvider>
       <html lang='en'>
-        <body className={`bg-xgraylight ${inter.className}`}>
+        <body className={`bg-xgraylight select-none ${inter.className}`}>
           <Navbar />
           <main>{children}</main>
         </body>

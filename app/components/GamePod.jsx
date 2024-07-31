@@ -1,7 +1,11 @@
 'use client'
+import {createContext, useContext, useState} from 'react'
 import Image from 'next/image'
 
 export default function GamePod({game}) {
+  // const [pickSlip, setPickSlip] = useState([])
+  const pickSlip = []
+
   const gameId = game.id
   const date = game.date
   const timeTv = game.status.type.shortDetail
@@ -30,9 +34,9 @@ export default function GamePod({game}) {
   const homeLocation = game.competitions[0].competitors[0].homeAway
 
   const oddsOff = !spread
-  const visitorBet = favorite === visitorName ? 'fav' : 'dog'
+  const visitorPick = favorite === visitorName ? 'fav' : 'dog'
   const visitorSpread = spread ? (favorite === visitorName ? `-${spread}` : `+${spread}`) : 'off'
-  const homeBet = favorite === homeName ? 'fav' : 'dog'
+  const homePick = favorite === homeName ? 'fav' : 'dog'
   const homeSpread = spread ? (favorite === homeName ? `-${spread}` : `+${spread}`) : 'off'
 
   return (
@@ -50,9 +54,14 @@ export default function GamePod({game}) {
         <p>{visitorName}</p>
         <p className='text-xs text-xgraysmokey'>({visitorRecord})</p>
         <p className='ml-auto mr-4'>{visitorScore}</p>
+
         {/* pick buttons */}
-        <div className={`min-w-12 max-w-12 text-white border border-xgraysmokey hover:border-bigorange hover:text-bigorange text-center text-sm bg-xgraysmokey rounded py-1 cursor-pointer ${!spread && 'odds-off'}`}>{visitorSpread}</div>
-        <div className={`min-w-12 max-w-12 text-white border border-xgraysmokey hover:border-bigorange hover:text-bigorange text-center text-sm bg-xgraysmokey rounded py-1 cursor-pointer ${!total && 'odds-off'}`}>{(total && `o${total}`) || 'off'}</div>
+        <div id={`${gameId}-visitorspread`} data-pick={visitorName} data-bettype='spread' data-picktype={visitorPick} data-loc='away' onClick={e => handlePick(e)} className={`min-w-12 max-w-12 text-white border border-xgraysmokey hover:border-bigorange text-center text-sm bg-xgraysmokey rounded py-1 cursor-pointer ${!spread && 'odds-off'}`}>
+          {visitorSpread}
+        </div>
+        <div id={`${gameId}-over`} data-pick='OVER' data-bettype='total' data-picktype='over' onClick={e => handlePick(e)} className={`min-w-12 max-w-12 text-white border border-xgraysmokey hover:border-bigorange text-center text-sm bg-xgraysmokey rounded py-1 cursor-pointer ${!total && 'odds-off'}`}>
+          {(total && `o${total}`) || 'off'}
+        </div>
       </div>
 
       {/* HOME ROW*/}
@@ -62,10 +71,62 @@ export default function GamePod({game}) {
         <p>{homeName}</p>
         <p className='text-xs text-xgraysmokey'>({homeRecord})</p>
         <p className='ml-auto mr-4'>{homeScore}</p>
+
         {/* pick buttons */}
-        <div className={`min-w-12 max-w-12 text-white border border-xgraysmokey hover:border-bigorange hover:text-bigorange text-center text-sm bg-xgraysmokey rounded py-1 cursor-pointer ${!spread && 'odds-off'}`}>{homeSpread}</div>
-        <div className={`min-w-12 max-w-12 text-white border border-xgraysmokey hover:border-bigorange hover:text-bigorange text-center text-sm bg-xgraysmokey rounded py-1 cursor-pointer ${!total && 'odds-off'}`}>{(total && `u${total}`) || 'off'}</div>
+        <div id={`${gameId}-visitorspread`} data-pick={homeName} data-bettype='spread' data-picktype={homePick} data-loc='away' onClick={e => handlePick(e)} className={`min-w-12 max-w-12 text-white border border-xgraysmokey hover:border-bigorange text-center text-sm bg-xgraysmokey rounded py-1 cursor-pointer ${!spread && 'odds-off'}`}>
+          {homeSpread}
+        </div>
+        <div id={`${gameId}-under`} data-pick='UNDER' data-bettype='total' data-picktype='under' onClick={e => handlePick(e)} className={`min-w-12 max-w-12 text-white border border-xgraysmokey hover:border-bigorange text-center text-sm bg-xgraysmokey rounded py-1 cursor-pointer ${!total && 'odds-off'}`}>
+          {(total && `u${total}`) || 'off'}
+        </div>
       </div>
     </div>
   )
+
+  function handlePick(e) {
+    if (e.target.innerText === 'off') return
+
+    //remove pick if clicked on an existing pick
+    if (e.target.classList.contains('pick')) {
+      const idIndex = pickSlip.findIndex(pick => pick.pickId === e.target.id)
+      pickSlip.splice(idIndex, 1)
+      // setPickSlip(pickSlip.filter(pick => pick.pickId !== e.target.id))
+      // setPickSlip(pickSlip.splice(idIndex, 1))
+      e.target.classList.remove('pick')
+      console.log(pickSlip)
+      return
+    }
+
+    e.target.classList.add('pick')
+
+    const pickType = e.target.dataset.pickType
+    const line = pickType === 'spread' ? e.target.innerText.slice(1) : e.target.innerText
+
+    const newPick = {
+      pickId: e.target.id,
+      gameId: gameId,
+      gameState: timeTv,
+      startDate: new Date(date),
+      startTime: new Date(date).getTime().toString(),
+      matchup: matchup,
+      favorite: favorite || 'na',
+      pick: e.target.dataset.pick,
+      betType: e.target.dataset.bettype, //spread, total
+      pickType: pickType, //fav, dog, over, under
+      line: line,
+      score: 'tbd',
+      result: 'tbd',
+      loc: e.target.dataset.loc || 'na',
+      league: 'tbd',
+      conf: 'tbd',
+      logo: e.target.dataset.pick === homeName ? homeLogo : visitorLogo,
+    }
+    console.log(newPick)
+
+    pickSlip.push(newPick)
+    // setPickSlip(...pickSlip, newPick)
+    // setPickSlip(pickSlip.push(newPick))
+
+    console.log(pickSlip)
+  }
 }

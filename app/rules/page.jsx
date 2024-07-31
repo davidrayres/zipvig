@@ -1,13 +1,16 @@
 'use client'
 
 export default function RulesPage() {
-  getGames()
+  getData('20240903-20240909')
   return <div>RulesPage</div>
 }
 
-async function getGames() {
-  const res = await fetch('https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&dates=20231010-20231016')
-  const data = await res.json()
-  const gameData = data.events
-  console.log('GAMEDATA', gameData[0])
+async function getData(dates) {
+  const ncaaUrl = fetch(`https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=1000&dates=${dates}`)
+  const nflUrl = fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=1000&dates=${dates}`)
+  const results = await Promise.all([ncaaUrl, nflUrl])
+  const data = await Promise.all(results.map(result => result.json()))
+  const games = [...data[0].events, ...data[1].events]
+  console.log('GAMES', games)
+  return games
 }

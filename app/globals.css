@@ -31,7 +31,7 @@
   @apply flex justify-between text-sm font-bold mb-1;
 } */
 
-.team {
+/* .team {
   @apply w-full flex gap-2 items-center justify-start whitespace-nowrap;
 }
 
@@ -41,7 +41,7 @@
 
 .odds {
   @apply min-w-12 max-w-12 mx-1 text-center text-sm border border-xgraylight bg-xgraylight rounded py-1 m-1 cursor-pointer;
-}
+} */
 
 /* .odds {
   min-width: 3.25rem;
@@ -101,6 +101,10 @@
 
 .odds-off {
   @apply bg-white cursor-not-allowed;
+}
+
+.pick {
+  @apply bg-bigorange border-bigorange hover:text-white;
 }
 
 /* td.team,
